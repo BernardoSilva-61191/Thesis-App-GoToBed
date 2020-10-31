@@ -1,0 +1,28 @@
+#content_analysis {
+
+    min-height: 85vh;
+    width: 100%;
+
+
+    .header {
+      top: 0px;
+      width: 100vw;
+      height: 6vh;
+      margin: 2vh 2vw;
+      padding: 0px;
+      background-image: url('../../img/logohighdpi.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+    .analysisValues {
+      background-color: $graphsBackgroundColor;
+      border-top: solid 3px $graphsBorderColor;
+      .values img {
+        width: 95vw;
+      }
+      .status img {
+        width: 95vw;
+      }
+    }
+}

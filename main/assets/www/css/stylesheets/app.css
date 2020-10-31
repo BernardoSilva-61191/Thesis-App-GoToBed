@@ -1,0 +1,698 @@
+@font-face {
+  font-family: MyFont;
+  src: url("../../fonts/enso.ttf") format("truetype");
+}
+/* line 23, ../sass/app.scss */
+body {
+  font-family: MyFont;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+}
+
+/* line 30, ../sass/app.scss */
+#app .fullWidth {
+  width: 100%;
+  text-align: center;
+}
+
+/* line 35, ../sass/app.scss */
+.landscape .grid {
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+/* line 38, ../sass/app.scss */
+.landscape .grid .half {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+}
+/* line 42, ../sass/app.scss */
+.landscape .grid .half svg {
+  margin: 0 auto;
+}
+
+/* line 48, ../sass/app.scss */
+.portrait .grid .half {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+/* line 52, ../sass/app.scss */
+.portrait .grid .half svg {
+  margin: 0 auto;
+}
+
+/* line 57, ../sass/app.scss */
+.contentContainer {
+  background-color: #fff;
+  padding: 0 0 80px 0;
+  width: 100%;
+  font-size: 20px;
+}
+/* line 59, ../sass/app.scss */
+.contentContainer.transparentContainer {
+  background-color: transparent;
+}
+/* line 62, ../sass/app.scss */
+.contentContainer.graphsContainer {
+  overflow: hidden;
+}
+/* line 69, ../sass/app.scss */
+.contentContainer h1 {
+  font-size: 24px;
+  text-align: center;
+  display: none;
+  width: 90%;
+  margin-left: 5%;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* line 81, ../sass/app.scss */
+.notification {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 1em;
+  text-align: center;
+  padding: 5px 0;
+  z-index: 4;
+}
+/* line 91, ../sass/app.scss */
+.notification#connectionAlert {
+  background-color: rgba(255, 0, 0, 0.5);
+  color: white;
+}
+/* line 95, ../sass/app.scss */
+.notification#calibrationFinished {
+  background-color: rgba(0, 125, 0, 0.5);
+  color: white;
+}
+/* line 99, ../sass/app.scss */
+.notification .close {
+  float: right;
+  margin-right: 2vw;
+}
+
+/* line 1, ../sass/_buttons.scss */
+button.button {
+  border: solid 0.5vh 0.5vw #2fc1ac;
+  border-radius: 5px;
+  box-shadow: 0px 0px 1px 1px #2fc1ac;
+  background-color: white;
+  cursor: pointer;
+  font-size: 2vh;
+  color: #3d3d3d;
+  text-transform: uppercase;
+  margin: 2vw;
+  padding: 1vw 0.5vw 0.5vw 0.5vw;
+  font-family: MyFont;
+}
+/* line 14, ../sass/_buttons.scss */
+button.button.dimmed {
+  border: solid 0.5vh 0.5vw #CCCCCC;
+  box-shadow: 0px 0px 1px 1px #CCCCCC;
+  opacity: 0.5;
+}
+/* line 19, ../sass/_buttons.scss */
+button.button.warning {
+  border: solid 0.5vh 0.5vw #F93D4F;
+  box-shadow: 0px 0px 1px 1px #F93D4F;
+}
+
+/* line 21, ../sass/_graphs.scss */
+#content_dashboard {
+  padding-bottom: 0;
+}
+
+/* line 25, ../sass/_graphs.scss */
+.graphsContainer {
+  overflow: hidden;
+}
+/* line 27, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea {
+  position: relative;
+  overflow: auto;
+  padding: 0px;
+  margin: 0px;
+}
+/* line 32, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.header {
+  top: 0px;
+  width: 100vw;
+  height: 6vh;
+  margin: 2vh 2vw;
+  padding: 0px;
+  background-image: url("../../img/logohighdpi.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+/* line 43, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.inbed {
+  width: 100vw;
+  height: 16vh;
+  border-top: solid 3px #DFE0E1;
+  border-bottom: solid 3px #F5F6F7;
+  background-color: #F8FAFB;
+}
+/* line 49, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.inbed #inbedHeader {
+  position: absolute;
+  display: inline-block;
+  top: 2vh;
+  left: 5vw;
+  font-size: 4vh;
+  text-transform: uppercase;
+  color: #3d3d3d;
+}
+/* line 58, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.inbed .inbedValue {
+  opacity: 0;
+  transition: opacity 1s;
+  position: absolute;
+  display: inline-block;
+  top: 7.5vh;
+  left: 6vw;
+  height: 6vh;
+  width: 50vw;
+  font-size: 4vh;
+  text-transform: uppercase;
+  color: #3d3d3d;
+}
+/* line 72, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.chart {
+  width: 100vw;
+  height: 30vh;
+  padding: 1vh;
+}
+/* line 76, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.chart .chartContainer {
+  height: 95%;
+}
+/* line 78, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.chart .chartContainer .chartFill {
+  fill: url(#chartFillGradient);
+}
+/* line 81, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.chart .chartContainer .chartLine {
+  stroke: #2fc1ac;
+  stroke-width: 2;
+  fill: none;
+}
+/* line 86, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.chart .chartContainer .chartLine2 {
+  stroke: #F93D4F;
+  stroke-width: 2;
+  fill: none;
+}
+/* line 91, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.chart .chartContainer .grid {
+  stroke: #3d3d3d;
+}
+/* line 93, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.chart .chartContainer .grid line {
+  stroke-width: 0.5;
+}
+/* line 96, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.chart .chartContainer .grid text {
+  font-size: 5px;
+  stroke-width: 0.1;
+  fill: #3d3d3d;
+}
+/* line 100, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.chart .chartContainer .grid text.titleText, .graphsContainer div.graphsArea.chart .chartContainer .grid text.titleText2 {
+  font-size: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+/* line 106, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.chart .chartContainer .grid .titleCircle {
+  stroke: #2fc1ac;
+  fill: #78decf;
+}
+/* line 110, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.chart .chartContainer .grid .titleCircle2 {
+  stroke: #F93D4F;
+  fill: #fca0a9;
+}
+/* line 116, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.chart .chartContainer #chartFillGradient stop.begin {
+  stop-color: #4fd4c1;
+}
+/* line 119, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.chart .chartContainer #chartFillGradient stop.end {
+  stop-color: #f3fcfb;
+}
+/* line 125, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton {
+  border: solid 0.5vh #CCCCCC;
+  border-radius: 50%;
+  box-shadow: 0px 0px 2px 2px #CCCCCC;
+  background-color: white;
+  cursor: pointer;
+  font-size: 1.5vh;
+  color: #3d3d3d;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 0px;
+  padding: 0px;
+}
+/* line 137, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton:after {
+  content: "";
+  display: inline-block;
+  border: solid 0.5vh #CCCCCC;
+  border-radius: 50%;
+  background: linear-gradient(#ffffff, #eeeeee);
+  z-index: -1;
+}
+/* line 145, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton.primary {
+  height: 21vh;
+  width: 21vh;
+}
+/* line 149, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton.primary:after {
+  height: 15vh;
+  width: 15vh;
+  margin: 1vh;
+}
+/* line 156, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton.secondary {
+  height: 10vh;
+  height: 10vh;
+}
+/* line 160, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton.secondary:after {
+  height: 6vh;
+  width: 6vh;
+  margin: 1vh;
+}
+/* line 169, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton.selected:after {
+  background: linear-gradient(#eeeeee, #ffffff);
+}
+/* line 172, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton.selected.primary {
+  border: solid 0.5vh #2fc1ac;
+  box-shadow: 0px 0px 2px 2px #2fc1ac;
+}
+/* line 175, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton.selected.primary .rateValue {
+  text-shadow: 0px 0px 3px #2fc1ac;
+}
+/* line 179, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton.selected.secondary {
+  border: solid 0.5vh #F93D4F;
+  box-shadow: 0px 0px 2px 2px #F93D4F;
+}
+/* line 182, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton.selected.secondary .datasetNameSmall {
+  text-shadow: 0px 0px 3px #F93D4F;
+}
+/* line 187, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton .datasetName {
+  position: absolute;
+  display: inline-block;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+/* line 190, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton .datasetFooter {
+  position: absolute;
+  display: inline-block;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+/* line 193, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton .datasetNameSmall {
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+/* line 196, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea .datasetbutton .rateValue {
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  font-size: 4.5vh;
+}
+/* line 201, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.heartrate {
+  position: relative;
+  overflow: hidden;
+  width: 50vw;
+  height: 30vh;
+  border-top: solid 3px #DFE0E1;
+  background-color: #F8FAFB;
+}
+/* line 208, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.heartrate #heartratevariabilitybutton {
+  position: absolute;
+  display: inline-block;
+  top: 70%;
+  left: calc(45% + 8vh);
+  left: -webkit-calc(45% + 8vh);
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+/* line 212, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.heartrate #heartratebutton {
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+/* line 216, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.respirationrate {
+  position: relative;
+  overflow: hidden;
+  float: right;
+  width: 50vw;
+  height: 30vh;
+  border-top: solid 3px #DFE0E1;
+  background-color: #F8FAFB;
+}
+/* line 224, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.respirationrate #strokevolumebutton {
+  position: absolute;
+  display: inline-block;
+  top: 70%;
+  left: calc(55% - 8vh);
+  left: -webkit-calc(55% - 8vh);
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+/* line 228, ../sass/_graphs.scss */
+.graphsContainer div.graphsArea.respirationrate #respirationratebutton {
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+
+/* line 1, ../sass/_analyze.scss */
+#content_analysis {
+  min-height: 85vh;
+  width: 100%;
+}
+/* line 7, ../sass/_analyze.scss */
+#content_analysis .header {
+  top: 0px;
+  width: 100vw;
+  height: 6vh;
+  margin: 2vh 2vw;
+  padding: 0px;
+  background-image: url("../../img/logohighdpi.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+/* line 18, ../sass/_analyze.scss */
+#content_analysis .analysisValues {
+  background-color: #F8FAFB;
+  border-top: solid 3px #DFE0E1;
+}
+/* line 21, ../sass/_analyze.scss */
+#content_analysis .analysisValues .values img {
+  width: 95vw;
+}
+/* line 24, ../sass/_analyze.scss */
+#content_analysis .analysisValues .status img {
+  width: 95vw;
+}
+
+/* line 2, ../sass/_settings.scss */
+#content_settings .header {
+  top: 0px;
+  width: 96vw;
+  height: 6vh;
+  margin: 2vh 2vw;
+  padding: 0px;
+  background-image: url("../../img/logohighdpi.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+/* line 13, ../sass/_settings.scss */
+#content_settings .settingsGroup {
+  padding: 2vh 5vw;
+  border-top: solid 3px #DFE0E1;
+  width: 90vw;
+  font-size: 5vh;
+}
+/* line 21, ../sass/_settings.scss */
+#content_settings #foundSensors .button {
+  display: block;
+  font-size: 3vh;
+  text-shadow: 0px 0px 2px #2fc1ac;
+  padding: 1vh 1vw;
+}
+/* line 22, ../sass/_settings.scss */
+#content_settings #foundSensors .button::before {
+  content: '> ';
+}
+/* line 31, ../sass/_settings.scss */
+#content_settings .oobSettings {
+  padding: 2vh 10vw;
+  width: 80vw;
+  text-align: left;
+  font-size: 3vh;
+}
+/* line 36, ../sass/_settings.scss */
+#content_settings .oobSettings input {
+  width: 20vw;
+}
+/* line 41, ../sass/_settings.scss */
+#content_settings #calibrationParameters {
+  font-family: monospace;
+}
+/* line 44, ../sass/_settings.scss */
+#content_settings .settingsGroup input {
+  font-size: 4vh;
+  text-align: center;
+  border: 1px solid #7c858d;
+  border-radius: 1vh;
+}
+/* line 51, ../sass/_settings.scss */
+#content_settings input.full {
+  width: 90%;
+}
+/* line 55, ../sass/_settings.scss */
+#content_settings input.small {
+  width: 15%;
+}
+/* line 59, ../sass/_settings.scss */
+#content_settings .settingsGroup .help {
+  display: block;
+  margin: 5vh 5vw 5vh 5vw;
+  font-size: 4vh;
+  color: #3d3d3d;
+}
+/* line 66, ../sass/_settings.scss */
+#content_settings #adaptiveCalibrationConfig {
+  background-image: url("../../img/menu/assets/settings_no_text.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+}
+/* line 74, ../sass/_settings.scss */
+#content_settings .roundButton {
+  border: solid 0.5vh #7c858d;
+  background-color: transparent;
+  border-radius: 2.3vh;
+  padding: auto;
+  margin: 0;
+  font-size: 2.5vh;
+  font-weight: bold;
+  font-color: #7c858d;
+  vertical-align: text-bottom;
+  height: 4.5vh;
+  width: 4.5vh;
+}
+/* line 88, ../sass/_settings.scss */
+#content_settings .overlay {
+  display: none;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  color: black;
+}
+/* line 100, ../sass/_settings.scss */
+#content_settings .overlay .view {
+  z-index: 1;
+  font-size: 2.5vh;
+  position: relative;
+  background-color: white;
+  border: solid 1px;
+  margin: 5vh 5vw;
+  padding: 5vh 5vw;
+  width: 80vw;
+  height: 80vh;
+  color: #3d3d3d;
+  overflow: scroll;
+}
+/* line 101, ../sass/_settings.scss */
+#content_settings .overlay .view h1 {
+  display: block;
+}
+/* line 115, ../sass/_settings.scss */
+#content_settings .overlay .view .tabs {
+  font-size: 0;
+}
+/* line 117, ../sass/_settings.scss */
+#content_settings .overlay .view .tabs .tab {
+  display: inline-block;
+  border-bottom: solid 2px #2fc1ac;
+  margin: 0px;
+  padding: 5px;
+  font-size: 2vh;
+}
+/* line 123, ../sass/_settings.scss */
+#content_settings .overlay .view .tabs .tab.selected {
+  border-bottom: none;
+  border-left: solid 2px #2fc1ac;
+  border-top: solid 2px #2fc1ac;
+  border-right: solid 2px #2fc1ac;
+}
+/* line 131, ../sass/_settings.scss */
+#content_settings .overlay .view .tabTarget {
+  display: none;
+  overflow: scroll;
+  height: 70vh;
+}
+/* line 135, ../sass/_settings.scss */
+#content_settings .overlay .view .tabTarget.selected {
+  display: block;
+}
+/* line 137, ../sass/_settings.scss */
+#content_settings .overlay .view .tabTarget.selected p {
+  font-size: 2vh;
+  font-weight: normal;
+}
+/* line 143, ../sass/_settings.scss */
+#content_settings .overlay .view button.doneConfig {
+  position: fixed;
+  right: 8vw;
+  bottom: 8vh;
+}
+/* line 153, ../sass/_settings.scss */
+#content_settings #adaptiveCalibrationOverlay #adaptiveCalibrationWizard .phase {
+  display: none;
+}
+/* line 157, ../sass/_settings.scss */
+#content_settings #adaptiveCalibrationOverlay #adaptiveCalibrationWizard #calibrationQuality p.good {
+  color: #2fc1ac;
+}
+/* line 160, ../sass/_settings.scss */
+#content_settings #adaptiveCalibrationOverlay #adaptiveCalibrationWizard #calibrationQuality p.bad {
+  color: #F93D4F;
+}
+/* line 163, ../sass/_settings.scss */
+#content_settings #adaptiveCalibrationOverlay #adaptiveCalibrationWizard #calibrationQuality p.ok {
+  color: #DDCC00;
+}
+/* line 167, ../sass/_settings.scss */
+#content_settings #adaptiveCalibrationOverlay #adaptiveCalibrationWizard #sentCalibrationParameters {
+  font-size: 2vh;
+}
+/* line 170, ../sass/_settings.scss */
+#content_settings #adaptiveCalibrationOverlay #adaptiveCalibrationWizard button.endCalibration {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+/* line 175, ../sass/_settings.scss */
+#content_settings #adaptiveCalibrationOverlay #adaptiveCalibrationWizard .alert {
+  color: #F93D4F;
+}
+
+/* line 1, ../sass/_menu.scss */
+#menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  background-color: #F8FAFB;
+  color: white;
+  width: 100vw;
+  white-space: nowrap;
+  overflow: hidden;
+  z-index: 1;
+  height: 10vh;
+}
+/* line 15, ../sass/_menu.scss */
+#menu .menuButton {
+  cursor: pointer;
+  display: inline-block;
+  height: 8vh;
+  width: 28vw;
+  margin: 1vh 1vw;
+  text-align: center;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+/* line 26, ../sass/_menu.scss */
+#menu .menuButton.middle {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+/* line 30, ../sass/_menu.scss */
+#menu .menuButton.live {
+  background-image: url("../../img/menu/assets/live_inactivehighdpi.png");
+}
+/* line 32, ../sass/_menu.scss */
+#menu .menuButton.live.selected {
+  background-image: url("../../img/menu/assets/live_activehighdpi.png");
+}
+/* line 36, ../sass/_menu.scss */
+#menu .menuButton.history {
+  background-image: url("../../img/menu/assets/history_inactivehighdpi.png");
+}
+/* line 38, ../sass/_menu.scss */
+#menu .menuButton.history.selected {
+  background-image: url("../../img/menu/assets/history_activehighdpi.png");
+}
+/* line 42, ../sass/_menu.scss */
+#menu .menuButton.analysis {
+  background-image: url("../../img/menu/assets/analysis_inactivehighdpi.png");
+}
+/* line 44, ../sass/_menu.scss */
+#menu .menuButton.analysis.selected {
+  background-image: url("../../img/menu/assets/analysis_activehighdpi.png");
+}
+/* line 48, ../sass/_menu.scss */
+#menu .menuButton.settings {
+  background-image: url("../../img/menu/assets/settings_inactivehighdpi.png");
+}
+/* line 50, ../sass/_menu.scss */
+#menu .menuButton.settings.selected {
+  background-image: url("../../img/menu/assets/settings_activehighdpi.png");
+}

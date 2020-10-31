@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/default.css" />
+    <link rel="stylesheet" type="text/css" href="css/stylesheets/app.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <title>BCG</title>
+</head>
+
+<body class="status0">
+    <div id="app">
+
+        <div class="notification" id="connectionAlert">
+            <i class="fa fa-warning"></i> Connection lost
+        </div>
+        <div class="notification" id="calibrationFinished">
+            <i class="fa fa-check"></i> Calibration finished <span class="close">X</span>
+        </div>
+
+        <div class="contentContainer graphsContainer transparentContainer" id="content_dashboard">
+          <div class="graphsContainer">
+            <div class="graphsArea header"></div>
+            <div class="graphsArea inbed">
+              <span id="inbedHeader">Bed status</span>
+              <div class="inbedValue rateValue inbed0">Empty</div>
+              <div class="inbedValue rateValue inbed1">Occupied</div>
+              <div class="inbedValue rateValue inbed2">Movement</div>
+            </div>
+            <div class="graphsArea chart">
+              <svg version="1.0" id="chart" class="chartContainer" viewBox="0 0 400 100">
+                <title id="title"></title>
+                <g class="grid" id="chartXGrid"/>
+                <g class="grid" id="chartYGrid"/>
+                <defs>
+                  <linearGradient id="chartFillGradient" x1="0" x2="0" y1="0" y2="1">
+                    <stop class="begin" offset="0"/>
+                    <stop class="end" offset="100"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="graphsArea respirationrate">
+              <button class="datasetbutton primary" id="respirationratebutton" dataset="rr">
+                <span class="datasetName">Resp. Rate</span>
+                <span class="rateValue" id="respirationrate"></span>
+                <span class="datasetFooter">BPM</span>
+              </button>
+              <button class="datasetbutton secondary" id="strokevolumebutton" dataset="sv">
+                <span class="datasetNameSmall">SV</span>
+              </button>
+            </div>
+            <div class="graphsArea heartrate">
+              <button class="datasetbutton primary selected" id="heartratebutton" dataset="hr">
+                <span class="datasetName">Heart Rate</span>
+                <span class="rateValue" id="heartrate"></span>
+                <span class="datasetFooter">BPM</span>
+              </button>
+              <button class="datasetbutton secondary" id="heartratevariabilitybutton" dataset="hrv">
+                <span class="datasetNameSmall">HRV</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="contentContainer" id="content_analysis">
+
+          <div class="header"></div>
+            <div class="analysisValues">
+                <div class="status">
+                    <img src="img/recovery/good_status.png" alt="Recovery values">
+                </div>
+            </div>
+            <div id="analyzeControls" class="fullWidth">
+              Dataset:
+              <button class="analysis button" data-set="good">
+                Good recovery
+              </button>
+              <button class="analysis button warning dimmed" data-set="poor">
+                Poor recovery
+              </button>
+                <br/>
+                <center>Graph Sleep Analysis:
+                    <button id="settingsSleepAnalysis" class="button">
+                        GraphView
+                    </button>
+                </center>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="contentContainer" id="content_settings">
+            <div class="header"></div>
+            <div class="fullWidth settingsGroup">
+                <span>Last connected BSN:</span>
+                <br/>
+                <input id="sensorIp" type="text" placeholder="Sensor IP"/>
+                <br/>
+                <center>
+                    <button id="autoDiscovery" class="button">
+                        Find sensors
+                    </button>
+                </center>
+                <div id="foundSensors">
+                </div>
+            </div>
+
+            <div class="fullWidth settingsGroup">
+                Source:
+                <button id="settingsOnline" class="button">
+                    Sensor
+                </button>
+                <button id="settingsOffline" class="button">
+                    Dummy
+                </button>
+                <span class="help" id="onlineOfflineExplanation"></span>
+                <div class="fullWidth" style="margin-bottom:10px">
+                    Signal strength: <span id="signalStrength">N/A</span>
+                </div>
+            </div>
+
+            <div class="fullWidth settingsGroup">
+              <button id="adaptiveCalibrationButton" class="button settingsOnline">
+                Start Auto-calibration
+              </button>
+              <button id="adaptiveCalibrationConfig" class="roundButton"></button>
+              <button class="adaptiveCalibrationHelp roundButton">?</button>
+            </div>
+            <div id="adaptiveCalibrationOverlay" class="overlay">
+              <div id="adaptiveCalibrationWizard" class="view">
+                <div id="startCalibration" class="phase">
+                  <p>Start empty bed initialization when ready</p>
+                  <p>See use instructions from <button class="adaptiveCalibrationHelp roundButton">?</button>-button</p>
+                  <button class="emptyBedCalibrationButton button">Start empty bed initialization</button>
+                </div>
+                <div id="emptyBedCalibration" class="phase">
+                  <div id="emptyCalibrationHelp">
+                    <p>Wait for <span id="remainingEmptyCalibration"></span> seconds for empty bed initialization to finish.</p>
+                  </div>
+                  <div id="emptyCalibrationAlert">
+                    <p>High external vibration, you might want to repeat empty bed initialization.</p>
+                    <button class="emptyBedCalibrationButton button">Restart empty bed initialization</button>
+                    <button class="occupiedBedCalibrationButton button">Continue with occupied bed calibration</button>
+                  </div>
+                </div>
+                <div id="occupiedBedCalibration" class="phase">
+                  <div id="occupiedCalibrationHelp">
+                    <p>Wait for <span id="remainingOccupiedCalibration"></span> seconds for iteration <span id="occupiedCalibrationLoop"></span> of occupied bed calibration to finish.</p>
+                  </div>
+                  <div class="alert" id="occupiedCalibrationAlert">
+                    <p></p>
+                  </div>
+                </div>
+                <div id="discardCalibrationempty" class="phase">
+                  <div id="discardHelp">
+                    <p>Empty bed initialization finished, you can now occupy the bed. <span id="remainingDiscardCalibration"></span></p>
+                  </div>
+                </div>
+                <div id="discardCalibrationoccupied" class="phase">
+                  <div id="discardHelp">
+                    <p>Calibrating, please wait. <span id="remainingDiscardCalibration"></span></p>
+                  </div>
+                </div>
+                <div id="sentCalibrationParameters">
+                  <code>Sent calibration parameters: <span class="value"></span></code>
+                </div>
+                <div id="calibrationQuality">
+                  <p></p>
+                </div>
+                <button class="button endCalibration">End calibration</button>
+              </div>
+            </div>
+            <div id="adaptiveCalibrationConfigOverlay" class="overlay">
+              <div id="adaptiveCalibrationConfigView" class="view">
+                <div class="tabs">
+                  <div class="tab selected" data-target="1">Calibration</div>
+                  <div class="tab" data-target="2">Advanced</div>
+                </div>
+                <div class="tabTarget 1 selected">
+                  <p>Exit calibration automatically <input id="exitAdaptiveCalibration" type="checkbox"/></p>
+                  <p>Show calculated parameters <input id="showAdaptiveCalibrationParameters" type="checkbox"/></p>
+                </div>
+                <div class="tabTarget 2">
+                  <p>Send calibration parameters manually<br/>
+                    (Current parameters shown as defaults)<br/>
+                    <input id="calibrationParameters" class="full" type="text"><br/>
+                    <button id="sendCalibrationParameters" class="button">Send</button></p>
+                  <hr/>
+                  <p>Occupied iteration length<br/>
+                    <input id="requiredOccupiedCalibration" class="small" type="text"></p>
+                  <p>Empty bed initialization length<br/>
+                    <input id="requiredEmptyCalibration" class="small" type="text"></p>
+                  <p>Discard length<br/>
+                    <input id="calibrationDiscardLength" class="small" type="text"></p>
+                  <p>Calibration exp<br/>
+                    <input id="calibrationExp" class="small" type="text"></p>
+                  <p>Calibration empty max<br/>
+                    <input id="calibrationEmptyMax" class="small" type="text"></p>
+                  <p>Calibration stdev max<br/>
+                    <input id="calibrationStdevMax" class="small" type="text"></p>
+                  <p>Calibration good limit<br/>
+                    <input id="calibrationGoodLimit" class="small" type="text"></p>
+                  <p>Calibration ok limit<br/>
+                    <input id="calibrationOkLimit" class="small" type="text"></p>
+                  <button class="button resetCalibConfig">Reset to defaults</button>
+                  <hr/>
+                  <p>MovementLpAlpha<br/>
+                    <input id="calibMovementLpAlpha" class="small" type="text"></p>
+                  <p>AfterMovementFromMid<br/>
+                    <input id="calibAfterMovementFromMid" class="small" type="text"></p>
+                  <p>WaitTimeAfterMovement<br/>
+                    <input id="calibWaitTimeAfterMovement" class="small" type="text"></p>
+                  <p>ProbabilityLimitChangeToEmpty<br/>
+                    <input id="calibProbabilityLimitChangeToEmpty" class="small" type="text"></p>
+                  <p>ProbabilityLimitChangeToOccupied<br/>
+                    <input id="calibProbabilityLimitChangeToOccupied" class="small" type="text"></p>
+                  <p>ProbabilityLpAlpha<br/>
+                    <input id="calibProbabilityLpAlpha" class="small" type="text"></p>
+                  <p>QualityLpAlpha<br/>
+                    <input id="calibQualityLpAlpha" class="small" type="text"></p>
+                  <button class="button resetOobConfig">Reset to defaults</button>
+                </div>
+                <button class="button doneConfig">Done</button>
+              </div>
+            </div>
+            <div id="adaptiveCalibrationHelpOverlay" class="overlay">
+              <div id="adaptiveCalibrationHelpView" class="view">
+                <h1>Auto-Calibration guidelines</h1>
+                <p>This program is based on the intelligent calibration and bed occupancy detection codes available on Murata SCA11H product web page.</p>
+                <h2>Overview</h2>
+                <p>The calibration will initialize to an empty bed environment in the first 15 seconds of the program run: make sure the bed is empty and not disturbed!</p>
+                <p>After initialization, bed occupancy will automatically be detected and calibration proceeds based on this detection. When prompted, please occupy the bed and remain as relaxed as possible. Calibration will run in iteration loops until good quality is achieved (the iteration loop will automatically finish at this event). Calibration quality is indicated on the screen after the first calibration iteration. Reaching good calibration quality will typically take from 3 to 6 iteration loops and any movement during calibration will increase the amount of required loops. In problem cases, see notes on configuration screen.</p>
+                <h2>Notes</h2>
+                <p>If the calibration quality indicator remains orange even after 6 iterations, the calibration quality is likely adequate (bed type variation may cause this kind of behavior). You can manually exit the software at any point and the calibration will take effect.</p>
+                <p>The performance of bed occupancy detection can vary during the first stages of calibration; in noisy environments (where initialization will tell you to repeat initialization), bed can be taken as occupied even when it is empty. In these cases, occupy the bed right after the initialization period for best results, and you may need to retry calibration a few times.</p>
+                <p>If the calibration will never show you the countdown from 45 seconds, the case may be that the sensor is poorly positioned. Look for a better performing position (look at signal strength difference between occupied (minimum) and empty bed (average) to help choose the best position)!</p>
+                <button class="button done">OK</button>
+              </div>
+            </div>
+            <div class="fullWidth settingsGroup">
+              <button id="bedStatusConfigurationsButton" class="button">
+                Bed status configurations
+              </button>
+            </div>
+            <div id="bedStatusConfigurationsOverlay" class="overlay">
+              <div id="bedStatusConfigurations" class="view">
+                <h1>Bed status configurations</h1>
+                <p>MovementLpAlpha<br/>
+                  <input id="oobMovementLpAlpha" class="small" type="text"></p>
+                <p>AfterMovementFromMid<br/>
+                  <input id="oobAfterMovementFromMid" class="small" type="text"></p>
+                <p>WaitTimeAfterMovement<br/>
+                  <input id="oobWaitTimeAfterMovement" class="small" type="text"></p>
+                <p>ProbabilityLimitChangeToEmpty<br/>
+                  <input id="oobProbabilityLimitChangeToEmpty" class="small" type="text"></p>
+                <p>ProbabilityLimitChangeToOccupied<br/>
+                  <input id="oobProbabilityLimitChangeToOccupied" class="small" type="text"></p>
+                <p>ProbabilityLpAlpha<br/>
+                  <input id="oobProbabilityLpAlpha" class="small" type="text"></p>
+                <p>QualityLpAlpha<br/>
+                  <input id="oobQualityLpAlpha" class="small" type="text"></p>
+                <button id="resetBedStatus" class="button">Reset bed status</button>
+                <button id="resetBedStatusConfig" class="button">Reset to defaults</button>
+                <button class="button doneConfig">Done</button>
+              </div>
+            </div>
+
+            <div class="fullWidth settingsGroup">
+                Set Alarm:
+                <button id="settingsAlarm" class="button">
+                    Alarm
+                </button>
+            </div>
+
+        </div>
+
+        <div id="menu">
+            <div class="menuButton live selected" id="tab_dashboard">
+            </div>
+            <div class="menuButton analysis middle" id="tab_analysis">
+            </div>
+            <div class="menuButton settings" id="tab_settings">
+            </div>
+        </div>
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/lib/polyfills.js"></script>
+
+        <script type="text/javascript" src="js/lib/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="js/lib/jquery.scrollstop.min.js"></script>
+
+        <script type="text/javascript" src="js/lib/lodash.min.js"></script>
+
+        <script type="text/javascript" src="js/algorithms.js"></script>
+        <script type="text/javascript" src="js/fakeBackend.js"></script>
+        <script type="text/javascript" src="js/touch.js"></script>
+
+        <script type="text/javascript" src="js/graphs.js"></script>
+        <script type="text/javascript" src="js/ported_matlab/functions.js"></script>
+        <script type="text/javascript" src="js/ported_matlab/percentile.js"></script>
+        <script type="text/javascript" src="js/ported_matlab/adaptive.js"></script>
+        <script type="text/javascript" src="js/matlab/out_of_bed.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+    </div>
+</body>
+
+</html>

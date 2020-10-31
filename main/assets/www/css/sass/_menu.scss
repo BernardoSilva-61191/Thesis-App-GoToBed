@@ -1,0 +1,55 @@
+#menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    background-color: $graphsBackgroundColor;
+    color: white;
+    width: 100vw;
+    white-space: nowrap;
+    overflow: hidden;
+
+    z-index: 1;
+
+    height: 10vh;
+    .menuButton {
+        cursor: pointer;
+        display: inline-block;
+        height: 8vh;
+        width: 28vw;
+        margin: 1vh 1vw;
+        text-align: center;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+
+        &.middle {
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        &.live {
+          background-image: url('../../img/menu/assets/live_inactivehighdpi.png');
+          &.selected {
+            background-image: url('../../img/menu/assets/live_activehighdpi.png');
+          }
+        }
+        &.history {
+          background-image: url('../../img/menu/assets/history_inactivehighdpi.png');
+          &.selected {
+            background-image: url('../../img/menu/assets/history_activehighdpi.png');
+          }
+        }
+        &.analysis {
+          background-image: url('../../img/menu/assets/analysis_inactivehighdpi.png');
+          &.selected {
+            background-image: url('../../img/menu/assets/analysis_activehighdpi.png');
+          }
+        }
+        &.settings {
+          background-image: url('../../img/menu/assets/settings_inactivehighdpi.png');
+          &.selected {
+            background-image: url('../../img/menu/assets/settings_activehighdpi.png');
+          }
+        }
+    }
+}

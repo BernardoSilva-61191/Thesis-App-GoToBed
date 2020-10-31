@@ -1,0 +1,180 @@
+#content_settings {
+    .header {
+      top: 0px;
+      width: 96vw;
+      height: 6vh;
+      margin: 2vh 2vw;
+      padding: 0px;
+      background-image: url('../../img/logohighdpi.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+.settingsGroup {
+    padding: 2vh 5vw;
+    border-top: solid 3px $graphsBorderColor;
+    width: 90vw;
+    font-size: 5vh;
+}
+
+#foundSensors {
+    .button {
+        &::before {
+            content: '> ';
+        }
+        display: block;
+        font-size: 3vh;
+        text-shadow: 0px 0px 2px $murataGreen;
+        padding: 1vh 1vw;
+    }
+}
+.oobSettings {
+    padding: 2vh 10vw;
+    width: 80vw;
+    text-align: left;
+    font-size: 3vh;
+    input {
+        width: 20vw;
+    }
+}
+
+#calibrationParameters {
+    font-family: monospace;
+}
+.settingsGroup input {
+    font-size: 4vh;
+    text-align: center;
+    border: 1px solid $murataGrey;
+    border-radius: 1vh;
+}
+
+input.full {
+    width: 90%;
+}
+
+input.small {
+    width: 15%;
+}
+
+.settingsGroup .help {
+    display: block;
+    margin: 5vh 5vw 5vh 5vw;
+    font-size: 4vh;
+    color: $murataTextColor;
+}
+
+#adaptiveCalibrationConfig {
+    background-image: url('../../img/menu/assets/settings_no_text.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: none;
+}
+
+.roundButton {
+    border: solid 0.5vh $murataGrey;
+    background-color: transparent;
+    border-radius: 2.3vh;
+    padding: auto;
+    margin: 0;
+    font-size: 2.5vh;
+    font-weight: bold;
+    font-color: $murataGrey;
+    vertical-align: text-bottom;
+    height: 4.5vh;
+    width: 4.5vh;
+}
+
+.overlay {
+    display: none;
+    z-index: 3;
+    background-color: rgba(0,0,0,0.5);
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    color: black;
+    .view {
+        h1 {
+            display: block;
+        }
+        z-index: 1;
+        font-size: 2.5vh;
+        position: relative;
+        background-color: white;
+        border: solid 1px;
+        margin: 5vh 5vw;
+        padding: 5vh 5vw;
+        width: 80vw;
+        height: 80vh;
+        color: $murataTextColor;
+        overflow: scroll;
+        .tabs {
+            font-size: 0;
+            .tab {
+                display: inline-block;
+                border-bottom: solid 2px $murataGreen;
+                margin: 0px;
+                padding: 5px;
+                font-size: 2vh;
+                &.selected {
+                    border-bottom: none;
+                    border-left: solid 2px $murataGreen;
+                    border-top: solid 2px $murataGreen;
+                    border-right: solid 2px $murataGreen;
+                }
+            }
+        }
+        .tabTarget {
+            display: none;
+            overflow: scroll;
+            height: 70vh;
+            &.selected {
+                display: block;
+                p {
+                    font-size: 2vh;
+                    font-weight: normal;
+                }
+            }
+        }
+        button.doneConfig {
+            position: fixed;
+            right: 8vw;
+            bottom: 8vh;
+        }
+    }
+}
+
+#adaptiveCalibrationOverlay {
+    #adaptiveCalibrationWizard {
+        .phase {
+            display: none;
+        }
+        #calibrationQuality p {
+            &.good {
+                color: $murataGreen;
+            }
+            &.bad {
+                color: $murataRed;
+            }
+            &.ok {
+                color: $murataYellow;
+            }
+        }
+        #sentCalibrationParameters {
+            font-size: 2vh;
+        }
+        button.endCalibration {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+        .alert {
+            color: $murataRed;
+        }
+    }
+}
+}

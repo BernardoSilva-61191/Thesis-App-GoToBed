@@ -1,0 +1,111 @@
+@import "compass/css3";
+$murataGrey: rgb(124, 133, 141);
+$murataAlmostGrey: rgb(194, 201, 206);
+$murataGreen: #2fc1ac;
+$murataRed: #F93D4F;
+$murataOrange: #F93D00;
+$murataYellow: #DDCC00;
+$murataTextColor: #3d3d3d;
+$murataButtonBorder: #CCCCCC;
+$graphsBackgroundColor: #F8FAFB;
+$graphsBorderColor: #DFE0E1;
+$graphsLightBorderColor: #F5F6F7;
+
+$green: rgb(54, 178, 84);
+$red: rgb(254, 33, 34);
+$dark: rgb(20,20,20);
+
+@font-face {
+    font-family: MyFont;
+    src: url('../../fonts/enso.ttf') format('truetype');
+}
+
+body {
+    font-family: MyFont;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+#app .fullWidth {
+    width: 100%;
+    text-align: center;
+}
+
+.landscape .grid {
+    white-space: nowrap;
+    overflow-x: hidden;
+    .half {
+        display: inline-block;
+        width: 50%;
+        text-align: center;
+        svg {
+            margin: 0 auto;
+        }
+    }
+}
+.portrait .grid {
+    .half {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        svg {
+            margin: 0 auto;
+        }
+    }
+}
+.contentContainer {
+    background-color: #fff;
+    &.transparentContainer {
+        background-color: rgba(0,0,0,0);
+    }
+    &.graphsContainer {
+      overflow: hidden;
+    }
+    padding: 0 0 80px 0;
+    width: 100%;
+    font-size: 20px;
+
+    h1 {
+        font-size: 24px;
+        text-align: center;
+        display: none;
+        width: 90%;
+        margin-left: 5%;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+}
+
+.notification {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 1em;
+  text-align: center;
+  padding: 5px 0;
+  z-index: 4;
+  &#connectionAlert {
+      background-color: rgba(255,0,0,0.5);
+      color: white;
+  }
+  &#calibrationFinished {
+      background-color: rgba(0,125,0,0.5);
+      color: white;
+  }
+  .close {
+    float: right;
+    margin-right: 2vw;
+  }
+
+}
+
+
+@import "_buttons";
+@import "_graphs";
+@import "_analyze";
+@import "_settings";
+@import "_menu";
